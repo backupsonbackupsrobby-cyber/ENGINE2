@@ -125,7 +125,7 @@ services:
 
   # Vault
   vault:
-    image: vault:latest
+    image: hashicorp/vault:latest
     container_name: engine-vault
     environment:
       VAULT_DEV_ROOT_TOKEN_ID: ${VAULT_TOKEN:-s.changemelater123456789abc}
