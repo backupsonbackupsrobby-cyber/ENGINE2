@@ -1,72 +1,24 @@
-name: ENGINE Health Monitoring
+# Health Check Workflow
+
+name: Health Check
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes
-  workflow_dispatch:
+    - cron: '0 * * * *'  # Every hour
 
 jobs:
-  health-check:
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Check Docker services
-        run: |
-          echo "Checking ENGINE services..."
-          docker-compose -f docker-compose-production.yml ps
-          
-      - name: Test API endpoints
-        run: |
-          services=(
-            "http://localhost:9001/api/ehf/status"
-            "http://localhost:9000/api/zha/devices"
-            "http://localhost:9000/api/tron/status"
-          )
-          
-          for endpoint in "${services[@]}"; do
-            echo "Testing: $endpoint"
-            curl -f -s "$endpoint" > /dev/null && echo "✓ OK" || echo "✗ FAILED"
-          done
-      
-      - name: Check system resources
-        run: |
-          echo "Docker disk usage:"
-          docker system df
-          echo ""
-          echo "Active containers:"
-          docker ps --format "table {{.Names}}\t{{.Status}}"
-      
-      - name: Create health report
-        run: |
-          cat > HEALTH_REPORT.json << 'EOF'
-          {
-            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-            "services": {
-              "tenetaiagency-101": "running",
-              "engine-365-days": "running",
-              "restricted-aichatbot-trader": "running",
-              "ultimate-engine": "initializing"
-            },
-            "kubernetes": "operational",
-            "uptime_percent": 100,
-            "api_response_time_ms": 95,
-            "alerts": 0,
-            "status": "healthy"
-          }
-          EOF
-          
-      - name: Upload health report
-        uses: actions/upload-artifact@v3
-        with:
-          name: health-report
-          path: HEALTH_REPORT.json
-      
-      - name: Notify on failure
-        if: failure()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          text: 'ENGINE health check failed'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run health check
+      run: ./check_health.sh
+
+    - name: Upload health check results
+      uses: actions/upload-artifact@v4
+      with:
+        name: health-check-results
+        path: ./results/health_check.json
