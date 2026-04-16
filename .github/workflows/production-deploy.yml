@@ -435,7 +435,7 @@ jobs:
           cat deployment-report.md
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: deployment-report
           path: deployment-report.md

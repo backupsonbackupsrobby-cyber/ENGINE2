@@ -18,7 +18,7 @@ jobs:
       run: ./check_health.sh
 
     - name: Upload health check results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: health-check-results
         path: ./results/health_check.json
