@@ -1,0 +1,10 @@
+﻿ENGINE2 ARCHITECTURE MAP
+========================
+
+- engine/
+- engine_core/
+- modules/
+- scripts/
+- k8s/
+- monitoring/
+- orchestration layer

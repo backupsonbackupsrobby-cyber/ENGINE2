@@ -1,0 +1,23 @@
+# Ultimate
+docker exec ultimate-engine cat /logs/ultimate_sovereign_metrics.json
+
+# Engine 365
+docker exec engine-365-days cat /logs/metrics.json
+
+# TENETAIAGENCY101
+docker exec tenetaiagency-101 cat /logs/metrics.json
+
+
+
+
+# Ultimate Sovereign (10 orders)
+docker exec ultimate-engine ps aux | Select-String python
+
+# Inverse Fold (vulnerable, crashing)
+docker exec inverse-fold-engine ps aux | Select-String python
+
+# Engine 365 (clean runner)
+docker exec engine-365-days tail -3 /logs/cycles.log
+
+# TENETAIAGENCY101 (original)
+docker exec tenetaiagency-101 tail -3 /logs/cycles.log

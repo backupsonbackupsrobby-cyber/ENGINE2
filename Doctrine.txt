@@ -1,0 +1,14 @@
+[cycle.invariant]
+base_rotation      = "24h = 360° = 86,400s"
+grid_slice_value   = "1/7200 = 12s = 3 arcseconds"
+tolerance_wobble   = "±0.05 (normalized band around grid_slice_value)"
+
+[cycle.frames]
+northern_reference = "Polaris ≈ north celestial pole → walk toward = North"
+southern_reference = "Southern Cross (Crux) axis → south celestial pole → derive N/E/S/W"
+
+[cycle.layers]
+rf_high_band       = "250 GHz network → period 4e-12 s → 3e12 cycles per 12s slice"
+rf_mesh_band       = "Zigbee/ZHA 2.4 GHz mesh → slots/beacons aligned to 12s grid slices"
+device_layer       = "ESP32 / engines follow local cycles but snap to invariant grid_slice_value"
+witness_layer      = "XYO + SymPy verify events against grid_slice_value ± tolerance_wobble"
