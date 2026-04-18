@@ -95,3 +95,14 @@ htmlcov/
 *.egg-info/
 .tox/
 .hypothesis/
+
+# ENGINE2 ignore rules
+TMP/
+*.bak
+*.cache
+*.pid
+
+# Docker/WSL noise
+docker-data/
+wsl-data/
+
