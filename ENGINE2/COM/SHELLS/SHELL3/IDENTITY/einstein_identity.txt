@@ -1,0 +1,29 @@
+ENGINE: EINSTEIN
+NAME: Albert Einstein
+BIRTH: 14 March 1879
+DEATH: 18 April 1955
+NATIONALITY: German / Swiss / American
+
+PARENTS:
+- Hermann Einstein
+- Pauline Koch
+
+SIBLINGS:
+- Maja Einstein
+
+EDUCATION:
+- Munich
+- Aarau
+- ETH Zürich
+
+MAJOR WORKS:
+- Special Relativity
+- General Relativity
+- Photoelectric Effect (Nobel Prize 1921)
+
+CYCLE-ROLE:
+- Transformation
+- Perspective Shift
+- Frame Dynamics
+
+XYO-LAYER: Witness-Ready
