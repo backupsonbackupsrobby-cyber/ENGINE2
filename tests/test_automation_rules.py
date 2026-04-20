@@ -157,6 +157,7 @@ def test_engine_create_evaluate_execute_and_status():
     assert execution["rules_executed"] == 2
     assert execution["actions"] == 1
     assert len(execution["results"]) == 1
+    assert all(item["rule_id"] == "a" for item in execution["results"])
 
     assert zha.calls == [("light_1", "on", 7)]
 
@@ -167,6 +168,7 @@ def test_engine_create_evaluate_execute_and_status():
     assert status["total_triggers"] == 1
     assert status["total_automations"] == 1
     assert status["total_actions"] == 1
+    assert status["automations_executed"] == {"a": 1}
     assert status["execution_history"] == 1
 
 

@@ -82,6 +82,7 @@ def test_platform_status_and_count_devices_by_platform():
         "2": {"platform": "aqara"},
         "3": {"platform": "mi_home"},
         "4": {"platform": "other_vendor"},
+        "5": {},
     }
 
     counts = controller._count_devices_by_platform()
@@ -91,9 +92,9 @@ def test_platform_status_and_count_devices_by_platform():
         "tuya": 1,
         "aqara": 1,
         "mi_home": 1,
-        "other": 0,
+        "other": 1,
         "other_vendor": 1,
     }
-    assert status["total_devices"] == 4
+    assert status["total_devices"] == 5
     assert status["platforms"] == controller.platform_status
     assert status["devices_by_platform"] == counts
