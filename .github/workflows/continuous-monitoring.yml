@@ -32,8 +32,17 @@ jobs:
       
       - name: Verify git security
         run: |
-          echo "Checking git security..."
-          git log --verify-signature HEAD~5..HEAD | grep gpg || echo "Note: Enable GPG signing for security"
+          echo "Checking ENGINE security systems..."
+          commit_range="HEAD"
+          if git rev-parse --verify HEAD~5 >/dev/null 2>&1; then
+            commit_range="HEAD~5..HEAD"
+          fi
+
+          if git log --verify-signature "$commit_range" 2>/dev/null | grep -qi gpg; then
+            echo "✓ Signed commits detected"
+          else
+            echo "Note: Enable GPG signing for security"
+          fi
       
       - name: Test critical endpoints
         continue-on-error: true
@@ -118,5 +127,4 @@ jobs:
           cp HEALTH_STATUS.md docs/index.md
           echo "# ENGINE Health Dashboard" > docs/README.md
           echo "See index.md for latest status" >> docs/README.md
-
 
