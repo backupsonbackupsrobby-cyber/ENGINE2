@@ -1,32 +1,3 @@
 ENGINE: TESLA
-NAME: Nikola Tesla
-BIRTH: 10 July 1856
-DEATH: 7 January 1943
-NATIONALITY: Serbian-American
-
-PARENTS:
-- Milutin Tesla
-- Ðuka Mandic
-
-SIBLINGS:
-- Dane
-- Angelina
-- Milka
-- Marica
-
-EDUCATION:
-- Karlovac
-- Graz
-- Prague
-
-MAJOR WORKS:
-- AC Power System
-- Induction Motor
-- Tesla Coil
-
-CYCLE-ROLE:
-- Energy
-- Flow
-- High-Frequency Adaptation
-
-XYO-LAYER: Witness-Ready
+ROLE: ELECTRICITY / RESONANCE / FIELD
+STATUS: ACTIVE

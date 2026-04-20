@@ -1,30 +1,3 @@
 ENGINE: NEWTON
-NAME: Isaac Newton
-BIRTH: 4 January 1643
-DEATH: 31 March 1727
-NATIONALITY: English
-
-PARENTS:
-- Isaac Newton Sr.
-- Hannah Ayscough
-
-SIBLINGS:
-- Mary Smith
-- Benjamin Smith
-- Hannah Smith
-
-EDUCATION:
-- The King’s School, Grantham
-- Trinity College, Cambridge
-
-MAJOR WORKS:
-- Philosophiæ Naturalis Principia Mathematica
-- Laws of Motion
-- Universal Gravitation
-
-CYCLE-ROLE:
-- Stability
-- Foundation
-- Predictive Mass
-
-XYO-LAYER: Witness-Ready
+ROLE: FORCE / GRAVITY / MOTION
+STATUS: ACTIVE
