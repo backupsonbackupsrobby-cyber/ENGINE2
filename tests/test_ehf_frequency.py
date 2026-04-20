@@ -40,7 +40,10 @@ def test_analyze_biometrics_and_status_thresholds():
 
 def test_cognitive_state_and_frequency_mapping():
     engine = EHFFrequencyEngine()
-    assert engine.get_cognitive_state(CircadianPhase.FOCUS_WINDOW) == CognitiveState.DEEP_WORK
+    assert (
+        engine.get_cognitive_state(CircadianPhase.FOCUS_WINDOW)
+        == CognitiveState.DEEP_WORK
+    )
     assert engine.get_optimal_frequency(CognitiveState.DEEP_WORK) == 6.0
 
 

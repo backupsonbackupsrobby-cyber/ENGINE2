@@ -60,7 +60,9 @@ async def test_run_tron_cycle_increments_cycle_and_nonce():
     engine = TRONRhythmEngine(node_id="node-a", grid_frequency=1.0)
     engine.phase_allocations = {phase: 0 for phase in engine.phase_allocations}
 
-    await engine.run_tron_cycle(zha_state={"ok": True}, actions=[{"device": "x", "command": "c"}])
+    await engine.run_tron_cycle(
+        zha_state={"ok": True}, actions=[{"device": "x", "command": "c"}]
+    )
 
     assert engine.current_cycle == 1
     assert engine.grid_nonce == 1
