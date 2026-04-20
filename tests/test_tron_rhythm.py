@@ -62,11 +62,15 @@ def test_execution_phase_mutates_actions_with_cycle_and_timestamp():
 
 
 def test_run_tron_cycle_advances_cycle_and_nonce():
-    engine = TRONRhythmEngine(node_id="node_a", grid_frequency=10)
+    engine = TRONRhythmEngine(
+        node_id="node_a", grid_frequency=10
+    )
     engine.phase_allocations = {phase: 0 for phase in TRONPhase}
     actions = [{"device": "light_1", "command": "sync"}]
 
-    asyncio.run(engine.run_tron_cycle(zha_state={"state": "ok"}, actions=actions))
+    asyncio.run(
+        engine.run_tron_cycle(zha_state={"state": "ok"}, actions=actions)
+    )
 
     assert engine.current_cycle == 1
     assert engine.grid_nonce == 1

@@ -9,6 +9,10 @@ from engine_core.automation_rules import (
 )
 
 
+def _condition(entity, condition, value):
+    return {"entity": entity, "condition": condition, "value": value}
+
+
 def test_rule_condition_operators_cover_all_paths():
     rule = AutomationRule("rule_1", "Rule One")
     state = {
@@ -18,19 +22,35 @@ def test_rule_condition_operators_cover_all_paths():
         "label": "living_room_sensor",
     }
 
-    assert rule._evaluate_condition({"entity": "mode", "condition": "equals", "value": "heat"}, state)
-    assert rule._evaluate_condition({"entity": "mode", "condition": "not_equals", "value": "cool"}, state)
-    assert rule._evaluate_condition({"entity": "temperature", "condition": "gt", "value": 20}, state)
-    assert rule._evaluate_condition({"entity": "temperature", "condition": "lt", "value": 22}, state)
-    assert rule._evaluate_condition({"entity": "temperature", "condition": "gte", "value": 21}, state)
-    assert rule._evaluate_condition({"entity": "temperature", "condition": "lte", "value": 21}, state)
-    assert rule._evaluate_condition({"entity": "humidity", "condition": "in_range", "value": (35, 45)}, state)
-    assert rule._evaluate_condition({"entity": "label", "condition": "contains", "value": "room"}, state)
+    assert rule._evaluate_condition(
+        _condition("mode", "equals", "heat"), state
+    )
+    assert rule._evaluate_condition(
+        _condition("mode", "not_equals", "cool"), state
+    )
+    assert rule._evaluate_condition(
+        _condition("temperature", "gt", 20), state
+    )
+    assert rule._evaluate_condition(
+        _condition("temperature", "lt", 22), state
+    )
+    assert rule._evaluate_condition(
+        _condition("temperature", "gte", 21), state
+    )
+    assert rule._evaluate_condition(
+        _condition("temperature", "lte", 21), state
+    )
+    assert rule._evaluate_condition(
+        _condition("humidity", "in_range", (35, 45)), state
+    )
+    assert rule._evaluate_condition(
+        _condition("label", "contains", "room"), state
+    )
 
 
 def test_should_execute_respects_enabled_and_conditions():
     rule = AutomationRule("rule_2", "Rule Two")
-    rule.add_condition({"entity": "state", "condition": "equals", "value": "armed"})
+    rule.add_condition(_condition("state", "equals", "armed"))
 
     assert rule.should_execute({"state": "armed"})
     assert not rule.should_execute({"state": "disarmed"})
@@ -58,7 +78,9 @@ class FakeZHA:
         self.calls = []
 
     async def set_device_state(self, device_id, state, sync_cycle=None):
-        self.calls.append({"device_id": device_id, "state": state, "sync_cycle": sync_cycle})
+        self.calls.append(
+            {"device_id": device_id, "state": state, "sync_cycle": sync_cycle}
+        )
         return True
 
 
@@ -67,8 +89,12 @@ def test_engine_evaluate_execute_and_status_tracking():
     engine = AutomationRulesEngine(zha_integration=zha)
 
     rule = engine.create_rule("motion", "Motion Rule")
-    rule.add_condition({"entity": "motion", "condition": Condition.EQUALS.value, "value": True})
-    rule.add_action(AutomationAction(device_id="light_1", service="turn_on", data={"state": "on"}))
+    rule.add_condition(_condition("motion", Condition.EQUALS.value, True))
+    rule.add_action(
+        AutomationAction(
+            device_id="light_1", service="turn_on", data={"state": "on"}
+        )
+    )
 
     matched = asyncio.run(engine.evaluate_triggers({"motion": True}))
     assert matched == ["motion"]
@@ -78,7 +104,9 @@ def test_engine_evaluate_execute_and_status_tracking():
     assert result["rules_executed"] == 1
     assert result["actions"] == 1
     assert result["results"][0]["success"] is True
-    assert zha.calls == [{"device_id": "light_1", "state": "on", "sync_cycle": 7}]
+    assert zha.calls == [
+        {"device_id": "light_1", "state": "on", "sync_cycle": 7}
+    ]
 
     status = engine.get_engine_status()
     assert status["total_rules"] == 1
