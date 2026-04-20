@@ -1,4 +1,4 @@
-﻿# Health Check Workflow
+# Health Check Workflow
 
 name: Health Check
 
@@ -8,7 +8,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
+
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -24,4 +25,5 @@ jobs:
       with:
         name: health-check-results
         path: ./results/health_check.json
+
 

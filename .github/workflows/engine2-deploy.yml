@@ -1,4 +1,4 @@
-﻿name: ENGINE2 Multi-Cluster Deploy
+name: ENGINE2 Multi-Cluster Deploy
 
 on:
   workflow_dispatch:
@@ -50,4 +50,5 @@ jobs:
           chmod +x ./scripts/health/k8s-deploy-orchestrator.sh
           ./scripts/health/k8s-deploy-orchestrator.sh
         shell: bash
+
 

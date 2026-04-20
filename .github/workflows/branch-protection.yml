@@ -1,4 +1,4 @@
-﻿name: Branch Protection
+name: Branch Protection
 
 on:
   pull_request:
@@ -7,7 +7,8 @@ on:
 jobs:
   validate-pr:
     name: Validate Pull Request
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
+
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
@@ -16,29 +17,30 @@ jobs:
       - name: Check PR has description
         run: |
           if [ -z "${{ github.event.pull_request.body }}" ]; then
-            echo "âŒ PR description is required"
+            echo "❌ PR description is required"
             exit 1
           fi
-          echo "âœ“ PR has description"
+          echo "✓ PR has description"
       
       - name: Check PR labels
         run: |
           if [ ${#labels[@]} -eq 0 ]; then
-            echo "âš ï¸ Warning: PR should have labels"
+            echo "⚠️ Warning: PR should have labels"
           fi
       
       - name: Verify no merge conflicts
         run: |
           if git merge-base --is-ancestor ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}; then
-            echo "âœ“ No merge conflicts"
+            echo "✓ No merge conflicts"
           else
-            echo "âŒ Merge conflict detected"
+            echo "❌ Merge conflict detected"
             exit 1
           fi
 
   validate-changes:
     name: Validate File Changes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
+
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
@@ -49,21 +51,22 @@ jobs:
       - name: Check no .env files committed
         run: |
           if git diff origin/main HEAD --name-only | grep -E '\.env'; then
-            echo "âŒ Do not commit .env files"
+            echo "❌ Do not commit .env files"
             exit 1
           fi
-          echo "âœ“ No .env files detected"
+          echo "✓ No .env files detected"
       
       - name: Check no secrets in commits
         run: |
           if git log origin/main..HEAD -p | grep -E '(password|secret|api_key|token)'; then
-            echo "âš ï¸ Possible secrets detected - review changes"
+            echo "⚠️ Possible secrets detected - review changes"
           fi
-          echo "âœ“ Secrets scan complete"
+          echo "✓ Secrets scan complete"
 
   lint-code:
     name: Lint Code
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
+
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
@@ -86,4 +89,5 @@ jobs:
       
       - name: Run isort check
         run: isort --check-only engine_core/ || true
+
 
